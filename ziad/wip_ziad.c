@@ -8,12 +8,13 @@
  */
 int main(void)
 {
-	int read_bytes = 1024, i = 0, exe_return, wstatus;
-	int shell_pid = getpid() , child_pid;
-	char delim[] = " "
-	char *str_buf; 
-	char *token;
-	char *arg_buf[1024];	/* how many arguments? how to make it flexible? */
+	int /*i = 0, */exe_return, wstatus;
+	int /*shell_pid = getpid() ,*/child_pid;
+	size_t read_bytes = 1024;
+	char delim[] = " ";
+	char *str_buf = NULL; 
+	char *token = NULL;
+	char *arg_buf[100] = {"-l", NULL};
 	
 	while (1)
 	{
@@ -23,40 +24,51 @@ int main(void)
 		/* accepting input into a string buffer */
 		getline(&str_buf, &read_bytes, stdin);
 
-		/* tokenizing the string so it turns into an array of arguments */
+		printf("getline worked and read: %s\n", str_buf);
+
+		token = malloc(strlen(str_buf) * sizeof(char));
+/* tokenizing the string so it turns into an array of arguments */
 		token = strtok(str_buf, delim);
-		while (token)
+		printf("the first strtok worked and accepted: %s\n\n", token);
+		
+/*		while (token)
 		{
 			strcpy(arg_buf[i], token);
 			token = strtok(NULL, delim);
 			i++;
 		}
+
 		arg_buf[i] = NULL;
 
-		/* if the user wants to exit the shell */
-		if (arg_buf[0] == "exit")
-		{
-			free(str_buf);
-			return (0);
-		}
+		for (i = 0; arg_buf[i]; i++)
+			printf("strtok() worked and read: %s\n", arg_buf[i]);
+
+	*/
+/* freeing str_buf since we copied its tokens into arg_buf */
+	/*	free(str_buf);*/
+
+
+
 
 		/* forking to execute the program */
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			exe_return = execve(arg_buf[0], arg_buf[1]); 
-	/*how to pass arguments to the program? is an array the right way? */
+			printf("child process start\n");
+			exe_return = execve(arg_buf[0], arg_buf, NULL); 
 			if (exe_return == -1)
 			{
 				perror("Error: ");
 				exit(-1);
 			}
+
 		}
 		else
 		{
-			wait(&wstatus); /* revise this */
+			wait(&wstatus);
+			printf("child process end and now in shell\n"); 
 		}
 
-		free(str_buf);
+	/*	free(str_buf);*/
 	}
 }
