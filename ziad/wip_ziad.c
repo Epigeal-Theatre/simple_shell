@@ -1,6 +1,7 @@
 #include "shell.h"
 
 #define PROMPT "input name of program ->"
+#define ERR_NOTFOUND "Error: file or command not found\n"
 
 /**
  * main -	simple shell program
@@ -10,6 +11,7 @@ int main(void)
 {
 	int i = 0, exe_return, wstatus, child_pid;
 	size_t read_bytes = 1024;
+/*	struct stat st;*/
 	char delim[] = " ";
 	char *str_buf = NULL, *token = NULL, *arg_buf[5], *exe_path = NULL;
 
@@ -27,8 +29,15 @@ int main(void)
 		token = strtok(str_buf, delim);
 		printf("the first strtok worked and accepted: %s\n\n", token);
 		if (strcmp(token, "exit") == 0)
-			return (0);
+			exit(EXIT_SUCCESS);
 
+		/* checking if file or command exists */
+/*		if (stat(token, &st) != 0)
+		{
+			write(2, ERR_NOTFOUND, strlen(ERR_NOTFOUND)); 
+			continue;
+		}
+*/
 		/* saving path and name of program into exe_path */
 		exe_path = malloc(strlen(token));
 		strcpy(exe_path, token);
@@ -60,7 +69,7 @@ int main(void)
 		if (child_pid == 0)
 		{
 			printf("child process start\n\n");
-			printf("arg_buf = %s\n\n", arg_buf);
+			printf("arg_buf = %s\n\n", arg_buf[0]);
 			exe_return = execvp(exe_path, arg_buf);
 			if (exe_return == -1)
 				perror("Error: ");
