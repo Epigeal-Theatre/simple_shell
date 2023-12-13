@@ -15,14 +15,14 @@ char fetchfilehist(info_t *info)
 	dir = getenvt(info, "HOME=");
 	if (!dir)
 	return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HFL) + 2));
+	buf = malloc(sizeof(char) * (stringlength(dir) + stringlength(HFL) + 2));
 	if (!buf)
 
 	return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, HFL);
+	strconcat(buf, "/");
+	strconcat(buf, HFL);
 
 	return (buf);
 }
@@ -69,16 +69,12 @@ int writehist(info_t *info)
 int readhist(info_t *info)
 {
 	int x, last = 0, lnct = 0;
-
 	ssize_t fdec, rdlen, fsize = 0;
-
 	struct stat st;
-
 	char *buf = NULL, *fn = fetchfilehist(info);
 
 	if (!fn)
-		return (0);
-
+	return (0);
 	fdec = open(fn, O_RDONLY);
 	free(fn);
 	if (fdec == -1)
@@ -92,11 +88,9 @@ int readhist(info_t *info)
 	return (0);
 	rdlen = read(fdec, buf, fsize);
 	buf[fsize] = 0;
-
 	if (rdlen <= 0)
 	return (free(buf), 0);
 	close(fdec);
-
 	for (x = 0; x < fsize; x++)
 	if (buf[x] == '\n')
 	{
@@ -109,8 +103,8 @@ int readhist(info_t *info)
 	free(buf);
 	info->histcount = lnct;
 	while (info->histcount-- >= HIST_MAX)
-		deleteatindex(&(info->hist), 0);
-	renumber_history(info);
+	deleteatindex(&(info->hist), 0);
+	renumberhist(info);
 	return (info->histcount);
 }
 
@@ -131,13 +125,10 @@ int histbuilder(info_t *info, char *buf, int lnct)
 	list_t *node = NULL;
 
 	if (info->hist)
-
 	node = info->hist;
 	addnodetoend(&node, buf, lnct);
-
 	if (!info->hist)
 	info->hist = node;
-
 	return (0);
 }
 

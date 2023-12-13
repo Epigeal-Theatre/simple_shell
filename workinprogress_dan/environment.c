@@ -54,7 +54,7 @@ int setenvironment(info_t *info)
 {
 	if (info->argc != 3)
 	{
-	_eputs("Number of arguments you entered is Incorrect\n");
+	_eputs("Number of arguments you entered is icorrect\n");
 	return (1);
 	}
 

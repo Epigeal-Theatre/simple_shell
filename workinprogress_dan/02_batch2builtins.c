@@ -10,7 +10,7 @@
 
 int myhist(info_t *info)
 {
-	print_list(info->hist);
+	printlist(info->hist);
 	return (0);
 }
 

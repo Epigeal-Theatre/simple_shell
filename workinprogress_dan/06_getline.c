@@ -41,8 +41,8 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 	btrd--;
 	}
 	info->linecount_flag = 1;
-	remove_comments(*buf);
-	build_history_list(info, *buf, info->histcount++);
+	commentremover(*buf);
+	histbuilder(info, *buf, info->histcount++);
 	if (_strchr(*buf, ';'))
 	/*now we check for presence of ; semicolon implying a cmd chain*/
 	{
@@ -65,7 +65,7 @@ ssize_t get_input(info_t *info)
 {
 	static char *buf;
 	static size_t xi, xj, len;
-/*we need static variabls because we want values to persiste between func calls*/
+/*we need static vars cause we want values to persist btn func calls*/
 /*xi and xj store the length of the buffer*/
 	ssize_t btrd = 0;
 	char **buf_p = &(info->arg), *p;
@@ -96,7 +96,7 @@ ssize_t get_input(info_t *info)
 	}
 
 	*buf_p = p;
-	return (_strlen(p));
+	return (stringlength(p));
 	}
 
 	*buf_p = buf;/*we snoop through repeatedly while resetting buffer post*/
@@ -153,8 +153,8 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	if (p && length)
 	sz = *length;
 
-	if (i == len)/*after reading a line, we start again*/
-	i = len = 0;
+	if (xi == len)/*after reading a line, we start again*/
+	xi = len = 0;
 
 	btrd = read_buf(info, buf, &len);
 	/*we call the read func to check if read well*/
@@ -162,16 +162,17 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	/*if there are errors, we stop and report*/
 	return (-1);
 
-	c = _strchr(buf + i, '\n');/*we look at the end of line we read*/
+	c = _strchr(buf + xi, '\n');/*we look at the end of line we read*/
 	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = _realloc(p, sz, sz ? sz + k : k + 1);/*we reallocate space for new line*/
+	new_p = _realloc(p, sz, sz ? sz + k : k + 1);
+	/*above line will reallocate space for new line*/
 
 	if (!new_p) /*if there are issues, malloc fails*/
 	else
-	_strncpy(new_p, buf + i, k - i + 1);
+	_strncpy(new_p, buf + xi, k - xi + 1);
 /*if there were no issues, we add new text to old text.*/
-	sz += k - i;
-	i = k;
+	sz += k - xi;
+	xi = k;
 	p = new_p;
 /*now we account for what has been put together and update counters*/
 	if (length)

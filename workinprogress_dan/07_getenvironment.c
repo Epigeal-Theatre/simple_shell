@@ -11,7 +11,7 @@ char **get_environmt(info_t *info)
 {
 	if (!info->environmt || info->changedenv)/*check for non zero*/
 	{
-	info->environmt = list_to_strings(info->env);
+	info->environmt = list2string(info->env);
 	info->changedenv = 0;/*we set to 0 to show no change occured*/
 	}
 /*with this func, we want to see if envt vars are up to date*/
@@ -44,7 +44,7 @@ int _unsetenv(info_t *info, char *var)
 	p = start(node->str, var);
 	if (p && *p == '=')
 	{
-	info->changedenv= deleteatindex(&(info->env), i);
+	info->changedenv = deleteatindex(&(info->env), i);
 	i = 0;
 	node = info->env;
 	continue;
@@ -78,14 +78,14 @@ int _setenv(info_t *info, char *var, char *value)
 	if (!var || !value)
 	return (0);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	buf = malloc(stringlength(var) + stringlength(value) + 2);
 
 	if (!buf)
 	return (1);
 
 	_strcpy(buf, var);
-	_strcat(buf, "=");
-	_strcat(buf, value);
+	strconcat(buf, "=");
+	strconcat(buf, value);
 	node = info->env;
 
 	while (node)

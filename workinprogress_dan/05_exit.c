@@ -28,7 +28,7 @@ char *_strncpy(char *dest, char *src, int xn)
 	{
 	y = x;
 
-	while (j < xn)
+	while (y < xn)
 
 	{
 	dest[y] = '\0';
@@ -79,8 +79,7 @@ char *_strchr(char *s, char c)
 	do {
 	if (*s == c)
 	return (s);
-	}
-	while (*s++ != '\0');
+	} while (*s++ != '\0');
 
 	return (NULL);
 }

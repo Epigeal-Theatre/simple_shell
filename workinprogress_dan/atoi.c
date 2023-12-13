@@ -48,7 +48,9 @@ int isalphabet(int c)
 
 /**
  *atoi - this func converts str to int
+
  *@st: the str we want to convert
+
  *Return: 0
  */
 
@@ -67,8 +69,8 @@ int atoi(char *st)
 
 	{
 	flag = 1;
-	result *= 10;
-	result += (st[x] - '0');
+	rs *= 10;
+	rs += (st[x] - '0');
 	}
 	else if (flag == 1)
 	flag = 2;

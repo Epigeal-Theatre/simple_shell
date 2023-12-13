@@ -32,7 +32,7 @@ void infoset(info_t *info, char **av)
 	info->fn = av[0];
 	if (info->arg)
 	{
-	info->argv = strtow(info->arg, " \t");
+	info->argv = strtowkn(info->arg, " \t");
 	if (!info->argv)
 	{
 
@@ -44,10 +44,9 @@ void infoset(info_t *info, char **av)
 	info->argv[1] = NULL;
 	}
 	}
-
-	for (x = 0; info->argv && info->argv[x]; x++);
+	for (x = 0; info->argv && info->argv[x]; x++)
+	;
 	info->argc = x;
-
 	replace_alias(info);
 	replace_vars(info);
 	}
@@ -75,13 +74,13 @@ void infofree(info_t *info, int all)
 	free(info->arg);
 
 	if (info->env)
-	free_list(&(info->env));
+	myfreelist(&(info->env));
 
 	if (info->hist)
-	free_list(&(info->hist));
+	myfreelist(&(info->hist));
 
 	if (info->alias)
-	free_list(&(info->alias));
+	myfreelist(&(info->alias));
 
 	ffree(info->environmt);
 

@@ -17,7 +17,7 @@ int exitfunc(info_t *info)
 	/*we want to see if there is another argument after exit*/
 
 	{
-	exitche = _erratoi(info->argv[1]);
+	exitche = erratoi(info->argv[1]);
 	/*we want to convert second str to int for storage*/
 	if (exitche == -1)/*-1 shows error*/
 
@@ -29,7 +29,7 @@ int exitfunc(info_t *info)
 	return (1);/*return 1 to show error during exit*/
 	}
 
-	info->err_num = _erratoi(info->argv[1]);/*successful exit with no error*/
+	info->err_num = erratoi(info->argv[1]);/*successful exit with no error*/
 	return (-2);
 	}
 

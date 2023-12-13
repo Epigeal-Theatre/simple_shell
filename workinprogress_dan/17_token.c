@@ -22,7 +22,7 @@ char **strtowkn(char *str, char *d)
 	if (!d)
 	d = " ";
 	for (a = 0; str[a] != '\0'; a++)
-	if (!is_delim(str[a], d) && (is_delim(str[a + 1], d) || !str[a + 1]))
+	if (!isdelimiter(str[a], d) && (isdelimiter(str[a + 1], d) || !str[a + 1]))
 	numwords++;
 
 	if (numwords == 0)
@@ -33,10 +33,10 @@ char **strtowkn(char *str, char *d)
 	return (NULL);
 	for (a = 0, b = 0; b < numwords; b++)
 	{
-	while (is_delim(str[a], d))
+	while (isdelimiter(str[a], d))
 	a++;
-	k = 0;
-	while (!is_delim(str[a + c], d) && str[a + c])
+	c = 0;
+	while (!isdelimiter(str[a + c], d) && str[a + c])
 	c++;
 	s[b] = malloc((c + 1) * sizeof(char));
 	if (!s[b])
@@ -99,7 +99,7 @@ char **strtowkn1(char *str, char d)
 	free(s);
 	return (NULL);
 	}
-	for (m = 0; x < c; x++)
+	for (x = 0; x < c; x++)
 	s[b][x] = str[a++];
 	s[b][x] = 0;
 	}
