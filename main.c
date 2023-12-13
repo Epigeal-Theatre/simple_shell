@@ -58,7 +58,7 @@ int main(void)
 
 		if (child_pid == 0)
 		{
-			exe_return = execve(exe_path, arg_buf, environ);
+			exe_return = execvpe(exe_path, arg_buf, environ);
 			if (exe_return == -1)
 				errorandfree(exe_path, str_buf);
 		}
