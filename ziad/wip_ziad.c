@@ -37,6 +37,7 @@ int main(void)
 		printf("# the first strtok worked and accepted: %s\n\n", token);
 		if (!token)
 		{
+			fflush(stdin);
 			free(str_buf);
 			continue;
 		}

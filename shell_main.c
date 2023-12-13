@@ -21,7 +21,10 @@ int main(void)
 		write(1, PROMPT, strlen(PROMPT));
 		getline(&str_buf, &read_bytes, stdin);
 		if (read == -1)
+		{
+			fflush(stdin);
 			exit(EXIT_SUCCESS);
+		}
 
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
@@ -29,6 +32,7 @@ int main(void)
 		token = strtok(str_buf, delim);
 		if (!token)
 		{
+			fflush(stdin);
 			free(str_buf);
 			continue;
 		}
