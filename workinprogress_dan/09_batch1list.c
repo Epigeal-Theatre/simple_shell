@@ -59,7 +59,7 @@ list_t *addnodetoend(list_t **head, const char *str, int num)
 
 	if (!head)
 	node = *head;
-i	nnode = malloc(sizeof(list_t));
+	nnode = malloc(sizeof(list_t));
 	if (!nnode)
 	return (NULL);
 	setmem((void *)nnode, 0, sizeof(list_t));
@@ -120,6 +120,7 @@ size_t printstringlist(const list_t *hd)
 int deleteatindex(list_t **head, unsigned int ind)
 {
 	list_t *node, *pnode;
+
 	unsigned int x = 0;
 
 	if (!head || !*head)

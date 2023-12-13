@@ -52,7 +52,7 @@ char *_strdup(const char *str)
 
 /**
  *_puts - this func will print strs
-
+ *
  *@str: str we want to print
  *
  * Return: no return value
@@ -60,7 +60,7 @@ char *_strdup(const char *str)
 
 void _puts(char *str)
 {
-	int x= 0;
+	int x = 0;
 
 	if (!str)
 	return;

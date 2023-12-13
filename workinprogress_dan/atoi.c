@@ -48,9 +48,9 @@ int isalphabet(int c)
 
 /**
  *atoi - this func converts str to int
-
+ *
  *@st: the str we want to convert
-
+ *
  *Return: 0
  */
 
