@@ -11,5 +11,5 @@
 
 /* function pointers */
 void errorandfree(char *buf1, char *buf2); 
-
+void successandfree(char *buf1, char *buf2);
 #endif /* ifndef SHELL_H */
