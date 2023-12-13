@@ -9,6 +9,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+extern char **environ;
+
 /* function pointers */
 void errorandfree(char *buf1, char *buf2); 
 void successandfree(char *buf1, char *buf2);

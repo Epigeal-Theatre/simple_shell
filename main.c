@@ -19,8 +19,8 @@ int main(void)
 	while (1)
 	{
 		write(1, PROMPT, _strlen(PROMPT));
-		read = getline(&str_buf, &read_bytes, stdin); 
-		
+		read = getline(&str_buf, &read_bytes, stdin);
+
 		if (read == -1)
 			successandfree(str_buf, exe_path);
 
@@ -42,7 +42,7 @@ int main(void)
 		if (exe_path == NULL)
 			errorandfree(str_buf, NULL);
 
-		_strncpy(exe_path, token, (strlen(token)+1));
+		_strncpy(exe_path, token, (strlen(token) + 1));
 		i = 0;
 		while (token != NULL && i < ARG_LIMIT)
 		{
@@ -58,7 +58,7 @@ int main(void)
 
 		if (child_pid == 0)
 		{
-			exe_return = execvp(exe_path, arg_buf);
+			exe_return = execve(exe_path, arg_buf, environ);
 			if (exe_return == -1)
 				errorandfree(exe_path, str_buf);
 		}
