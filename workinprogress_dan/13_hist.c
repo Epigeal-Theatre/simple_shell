@@ -51,8 +51,8 @@ int writehist(info_t *info)
 
 	for (node = info->hist; node; node = node->next)
 	{
-		_putsfd(node->str, fdec);
-		_putfd('\n', fdec);
+		_putsfdec(node->str, fdec);
+		_putfdec('\n', fdec);
 	}
 	_putfd(BUF_FLUSH, fdec);
 	close(fdec);
@@ -98,7 +98,7 @@ int readhist(info_t *info)
 	histbuilder(info, buf + last, lnct++);
 	last = x + 1;
 	}
-	if (last != i)
+	if (last != x)
 	histbuilder(info, buf + last, lnct++);
 	free(buf);
 	info->histcount = lnct;

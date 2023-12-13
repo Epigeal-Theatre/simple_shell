@@ -80,7 +80,7 @@ char *pathfinder(info_t *info, char *pathstr, char *cmd)
 	return (NULL);
 	if ((stringlength(cmd) > 2) && start(cmd, "./"))
 	{
-	if (dowehavecommand(info, cmd))
+	if (dowehavecmd(info, cmd))
 	return (cmd);
 	}
 	while (1)

@@ -60,7 +60,7 @@ int atoi(char *st)
 
 	unsigned int rs = 0;
 
-	for (x = 0;  s[x] != '\0' && flag != 2; x++)
+	for (x = 0;  st[x] != '\0' && flag != 2; x++)
 	{
 	if (st[x] == '-')
 	sign *= -1;
@@ -77,7 +77,7 @@ int atoi(char *st)
 	}
 
 	if (sign == -1)
-	out = -rs
+	out = -rs;
 
 	else
 	out = rs;

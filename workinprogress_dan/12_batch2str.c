@@ -46,7 +46,7 @@ char *_strdup(const char *str)
 	if (!rt)
 	return (NULL);
 	for (len++; len--;)
-	ret[len] = *--str;
+	rt[len] = *--str;
 	return (rt);
 }
 

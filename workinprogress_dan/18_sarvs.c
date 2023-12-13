@@ -114,8 +114,7 @@ int replace_alias(info_t *info)
 }
 
 /**
- * replace_vars - this func replaces vars
- *
+
  * @info:  struct placeholder
  *
  * Return: 1 upon successor 0 otherwise
@@ -150,7 +149,7 @@ int replace_vars(info_t *info)
 	_strdup(_strchr(node->str, '=') + 1));
 	continue;
 	}
-	replace_string(&info->argv[i], _strdup(""));
+	replace_string(&info->argv[x], _strdup(""));
 
 	}
 	return (0);
