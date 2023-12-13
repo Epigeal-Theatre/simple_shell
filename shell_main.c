@@ -18,7 +18,7 @@ int main(void)
 
 	while (1)
 	{
-		write(1, PROMPT, strlen(PROMPT));
+		write(1, PROMPT, _strlen(PROMPT));
 		getline(&str_buf, &read_bytes, stdin);
 		if (read == -1)
 		{
@@ -26,8 +26,8 @@ int main(void)
 			exit(EXIT_SUCCESS);
 		}
 
-		if (str_buf[strlen(str_buf) - 1] == '\n')
-			str_buf[strlen(str_buf) - 1] = '\0';
+		if (str_buf[_strlen(str_buf) - 1] == '\n')
+			str_buf[_strlen(str_buf) - 1] = '\0';
 
 		token = strtok(str_buf, delim);
 		if (!token)
@@ -37,14 +37,14 @@ int main(void)
 			continue;
 		}
 
-		if (strcmp(token, "exit") == 0)
+		if (_strcmp(token, "exit") == 0)
 			successandfree(str_buf, NULL);
 
 		exe_path = malloc(strlen(token) + 1);
 		if (exe_path == NULL)
 			errorandfree(str_buf, NULL);
 
-		strcpy(exe_path, token);
+		_strncpy(exe_path, token, (strlen(token)+1));
 		i = 0;
 		while (token != NULL && i < ARG_LIMIT)
 		{
@@ -60,6 +60,7 @@ int main(void)
 
 		if (child_pid == 0)
 		{
+			printf("child_process: exe_path = %s\n", exe_path);
 			exe_return = execvp(exe_path, arg_buf);
 			if (exe_return == -1)
 				errorandfree(exe_path, str_buf);
