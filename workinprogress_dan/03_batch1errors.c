@@ -63,7 +63,7 @@ int _putfdec(char c, int fdec)
 	if (c == BUF_FLUSH || x >= wbf)
 
 	{
-	write(fd, buf, x);
+	write(fdec, buf, x);
 	x = 0;
 
 	}

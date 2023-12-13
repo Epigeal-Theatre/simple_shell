@@ -134,9 +134,9 @@ int helpme(info_t *);
 
 /*02_batch2builtins.c*/
 int myhist(info_t *);
-int unsetalias(info_t *, char *);
-int setalias(info_t *, char *);
-int printmyalias(list_t *);
+/*int unsetalias(info_t *, char *);*/
+/*int setalias(info_t *, char *);*/
+/*int printmyalias(list_t *);*/
 int alias(info_t *);
 
 /*03_batch1errors.c*/
@@ -149,7 +149,7 @@ int _putsfdec(char *str, int fdec);
 int erratoi(char *);
 void printerror(info_t *, char *);
 int printdecimal(int, int);
-char *convertnumber(long int num, int bas, int flags);
+char *convertnumber(long int, int, int);
 void commentremover(char *);
 
 /*05_exit.c*/
@@ -158,11 +158,11 @@ char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
 /*06_getline.c*/
-ssize_t input_buf(info_t *, char **, size_t *);
+/*ssize_t input_buf(info_t *, char **, size_t *);*/
 ssize_t get_input(info_t *);
-ssize_t read_buf(info_t *, char *, size_t *);
+/*ssize_t read_buf(info_t *, char *, size_t *);*/
 int _getline(info_t *, char **, size_t *);
-void sigintHandler(__attribute__((unused))int sig_num);
+void sigintHandler(int);
 
 /*07_getenvironment.c*/
 char **get_environmt(info_t *);
@@ -194,7 +194,7 @@ int strcomp(char *, char *);
 char *start(const char *, const char *);
 char *strconcat(char *, char *);
 
-/*12_*/
+/*12_batch2str.c*/
 char *_strcpy(char *destination, char *source);
 char *_strdup(const char *str);
 void _puts(char *str);
@@ -224,11 +224,12 @@ void *_realloc(void *, unsigned int, unsigned int);
 char **strtowkn(char *, char *);
 char **strtowkn1(char *, char);
 
-/*18_*/
+/*18_sarvs*/
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
 int replace_vars(info_t *);
+int replace_string(char **, char *);
 
 /*atoi.c*/
 int interactive(info_t *);

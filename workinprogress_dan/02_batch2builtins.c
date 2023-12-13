@@ -27,7 +27,7 @@ int myhist(info_t *info)
 int unsetalias(info_t *info, char *str)
 {
 	char *p, c;
-	int ret;
+	int rt;
 
 	p = _strchr(str, '=');
 	if (!p)
