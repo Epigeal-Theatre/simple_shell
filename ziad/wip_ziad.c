@@ -24,12 +24,10 @@ int main(void)
 
 		/* accepting input into a string buffer *//*GETLINEGETLINE*/
 		getline(&str_buf, &read_bytes, stdin);
-<<<<<<< HEAD
-=======
 
->>>>>>> 99b7f71d43028780e656839196cb94541bcd82eb
 		/* accepting input into a string buffer */
 		read = getline(&str_buf, &read_bytes, stdin);
+	
 		printf("\nreturn of getline = %li\n", read);
 		if (read == -1)
 			exit(EXIT_SUCCESS);

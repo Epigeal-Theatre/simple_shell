@@ -69,6 +69,7 @@ int main(void)
 			str_buf = NULL;
 		}
 	}
+	return (0);
 }
 
 /**
