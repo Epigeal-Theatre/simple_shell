@@ -22,17 +22,15 @@ int main(void)
 		/* printing the prompt */
 		write(1, PROMPT, strlen(PROMPT));
 
-<<<<<<< HEAD
 		/* accepting input into a string buffer *//*GETLINEGETLINE*/
 		getline(&str_buf, &read_bytes, stdin);
-=======
+
 		/* accepting input into a string buffer */
 		read = getline(&str_buf, &read_bytes, stdin);
 		printf("\nreturn of getline = %li\n", read);
 		if (read == -1)
 			exit(EXIT_SUCCESS);
 
->>>>>>> c4f17c4a69a358913048eaa3e384465daad0a2bf
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
 
