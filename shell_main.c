@@ -19,12 +19,10 @@ int main(void)
 	while (1)
 	{
 		write(1, PROMPT, _strlen(PROMPT));
-		getline(&str_buf, &read_bytes, stdin);
+		read = getline(&str_buf, &read_bytes, stdin); 
+		
 		if (read == -1)
-		{
-			fflush(stdin);
-			exit(EXIT_SUCCESS);
-		}
+			successandfree(str_buf, exe_path);
 
 		if (str_buf[_strlen(str_buf) - 1] == '\n')
 			str_buf[_strlen(str_buf) - 1] = '\0';
@@ -33,7 +31,7 @@ int main(void)
 		if (!token)
 		{
 			fflush(stdin);
-			free(str_buf);
+			str_buf = NULL;
 			continue;
 		}
 
@@ -60,7 +58,6 @@ int main(void)
 
 		if (child_pid == 0)
 		{
-			printf("child_process: exe_path = %s\n", exe_path);
 			exe_return = execvp(exe_path, arg_buf);
 			if (exe_return == -1)
 				errorandfree(exe_path, str_buf);
@@ -68,8 +65,8 @@ int main(void)
 		else
 		{
 			wait(&wstatus);
-			free(exe_path);
-			free(str_buf);
+			exe_path = NULL;
+			str_buf = NULL;
 		}
 	}
 }
@@ -83,6 +80,7 @@ int main(void)
 void errorandfree(char *buf1, char *buf2)
 {
 	perror("Error: ");
+	fflush(stdin);
 	free(buf1);
 	if (buf2)
 		free(buf2);
@@ -97,6 +95,7 @@ void errorandfree(char *buf1, char *buf2)
  */
 void successandfree(char *buf1, char *buf2)
 {
+	fflush(stdin);
 	free(buf1);
 	if (buf2)
 		free(buf2);

@@ -22,17 +22,14 @@ int main(void)
 		/* printing the prompt */
 		write(1, PROMPT, strlen(PROMPT));
 
-<<<<<<< HEAD
 		/* accepting input into a string buffer *//*GETLINEGETLINE*/
 		getline(&str_buf, &read_bytes, stdin);
-=======
 		/* accepting input into a string buffer */
 		read = getline(&str_buf, &read_bytes, stdin);
 		printf("\nreturn of getline = %li\n", read);
 		if (read == -1)
 			exit(EXIT_SUCCESS);
 
->>>>>>> c4f17c4a69a358913048eaa3e384465daad0a2bf
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
 
@@ -49,6 +46,7 @@ int main(void)
 
 		if (strcmp(token, "exit") == 0)
 			exit(EXIT_SUCCESS);
+
 
 		/* checking if file or command exists */
 /*		if (stat(token, &st) != 0)
@@ -106,7 +104,9 @@ int main(void)
 			printf("\n# arg_buf = %s\n# address = %p\n\n", arg_buf[0], &*arg_buf[0]);
  			for (i = 0; arg_buf[i]; i++)
 				printf("# strtok() worked and read: %s\n", arg_buf[i]);
-			exe_return = execvp(exe_path, arg_buf);
+			
+/*			free(str_buf);
+*/			exe_return = execvp(exe_path, arg_buf);
 			if (exe_return == -1)
 			{
 				perror("Error: ");
@@ -121,10 +121,10 @@ int main(void)
 			printf("\n# child process end and now in shell\n\n");
 
 			/*freeing exe_path since execution is over*/
-			free(exe_path);
-
+/*			free(exe_path);
+*/
 			/* freeing str_buf since we tokenized it into arg_buf */
-			free(str_buf);
-		}
+/*			free(str_buf);
+*/		}
 	}
 }
