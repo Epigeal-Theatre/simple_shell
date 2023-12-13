@@ -12,6 +12,7 @@ int main(void)
 {
 	int i = 0, exe_return, wstatus, child_pid;
 	size_t read_bytes = 1024;
+/*	ssize_t read = 0;*/
 /*	struct stat st;*/
 	char delim[] = " ";
 	char *str_buf = NULL, *token = NULL, *arg_buf[ARG_LIMIT], *exe_path = NULL;
@@ -23,6 +24,7 @@ int main(void)
 
 		/* accepting input into a string buffer */
 		getline(&str_buf, &read_bytes, stdin);
+
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
 
@@ -41,7 +43,15 @@ int main(void)
 		}
 */
 		/* saving path and name of program into exe_path */
-		exe_path = malloc(strlen(token));
+		exe_path = malloc(strlen(token) + 1);
+		/* checking malloc */
+		if (exe_path == NULL)
+		{
+			perror("Error allocating memory");
+			free(str_buf);
+			exit(EXIT_FAILURE);
+		}
+
 		strcpy(exe_path, token);
 		printf("# exe_path = %s\n\n", exe_path);
 
@@ -59,29 +69,36 @@ int main(void)
 					token, arg_buf[i], i);
 			i++;
 		}
-		arg_buf[i + 1] = NULL;
+		arg_buf[i] = NULL;
 
 		for (i = 0; arg_buf[i]; i++)
 			printf("# strtok() worked and read: %s\n", arg_buf[i]);
 
-		/* freeing str_buf since we copied its tokens into arg_buf */
-/*		free(str_buf);
-*/
 		/* forking to execute the program */
 		child_pid = fork();
+		/* checking fork */
+		if (child_pid == -1)
+		{
+			perror("Error forking");
+			free(exe_path);
+			free(str_buf);
+			exit(EXIT_FAILURE);
+		}
 		if (child_pid == 0)
 		{
 			printf("\n# child process start\n\n");
 			printf("\n# testing other variables in the child process:token = %s\nchild_pid = %i\nexe_path = %s\n", token, child_pid, exe_path);
 			printf("\n# arg_buf = %s\n# address = %p\n\n", arg_buf[0], &*arg_buf[0]);
-/*			printf("\n# arg_buf (without []) = %s\n# adress = %p\n\n", *arg_buf, &*arg_buf);
- */			for (i = 0; arg_buf[i]; i++)
-			{
+ 			for (i = 0; arg_buf[i]; i++)
 				printf("# strtok() worked and read: %s\n", arg_buf[i]);
-			}
 			exe_return = execvp(exe_path, arg_buf);
 			if (exe_return == -1)
+			{
 				perror("Error: ");
+				free(exe_path);
+				free(str_buf);
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{
@@ -90,6 +107,9 @@ int main(void)
 
 			/*freeing exe_path since execution is over*/
 			free(exe_path);
+
+			/* freeing str_buf since we tokenized it into arg_buf */
+			free(str_buf);
 		}
 	}
 }
