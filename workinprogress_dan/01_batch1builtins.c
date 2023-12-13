@@ -17,19 +17,19 @@ int exitfunc(info_t *info)
 	/*we want to see if there is another argument after exit*/
 
 	{
-	exitche = _erratoi(info->argv[1]);
+	exitche = erratoi(info->argv[1]);
 	/*we want to convert second str to int for storage*/
 	if (exitche == -1)/*-1 shows error*/
 
 	{
 	info->status = 2;/*magnification of error above*/
-	print_error(info, "Illegal number: ");/*communication of error above*/
+	printerror(info, "Illegal number: ");/*communication of error above*/
 	_eputs(info->argv[1]);/*print illegal exit argument*/
 	_eputchar('\n');/*print new line*/
 	return (1);/*return 1 to show error during exit*/
 	}
 
-	info->err_num = _erratoi(info->argv[1]);/*successful exit with no error*/
+	info->err_num = erratoi(info->argv[1]);/*successful exit with no error*/
 	return (-2);
 	}
 
@@ -48,55 +48,45 @@ int cdfunc(info_t *info)
 {
 	char *sz, *dir, buffer[1024];
 	int chdir_ret;
-
 /*get the current working dir and store in s*/
 	sz = getcwd(buffer, 1024);
 	if (!sz)/*check if getcwd failed*/
 	_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])/*we want to check if no arguments were supplied*/
-
 	{
-	dir = _getenv(info, "HOME=");/*we want to get home dir from env variables*/
-
+	dir = getenvt(info, "HOME=");/*we want to get home dir from env variables*/
 	if (!dir)
-	chdir_ret = chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+	chdir_ret = chdir((dir = getenvt(info, "PWD=")) ? dir : "/");
 	/*if home dir isnt found, we set it to current wdir*/
 	else
 	chdir_ret = chdir(dir);
 	}
-
-	else if (_strcmp(info->argv[1], "-") == 0)
+	else if (strcomp(info->argv[1], "-") == 0)
 /*if "-" is provided, we print precious directory and go there*/
 	{
-	if (!_getenv(info, "OLDPWD="))
+	if (!getenvt(info, "OLDPWD="))
 	{
 	_puts(sz);
 	_putchar('\n');
 	return (1);
-
 	}
-	_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-	chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+	_puts(getenvt(info, "OLDPWD=")), _putchar('\n');
+	chdir_ret = chdir((dir = getenvt(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 	chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
-
 	{
-	print_error(info, "can't cd to ");
+	printerror(info, "can't cd to ");
 	_eputs(info->argv[1]), _eputchar('\n');
 	}
-
 	else
 	{
-	_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+	_setenv(info, "OLDPWD", getenvt(info, "PWD="));
 	_setenv(info, "PWD", getcwd(buffer, 1024));
-	}
-/*we finally check if we succeeded at changing work dir*/
+	} /*we finally check if we succeeded at changing work dir*/
 	return (0);/*shows success*/
-
 }
-
 /**
  * helpme - this func provides help in shell when called
  *

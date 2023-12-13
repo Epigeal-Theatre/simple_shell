@@ -99,7 +99,7 @@ int printdecimal(int input, int fdec)
 	}
 
 	__putchar('0' + crt);
-	count++;
+	ct++;
 
 	return (ct);
 }
@@ -139,7 +139,7 @@ char *convertnumber(long int num, int bas, int flags)
 
 	do	{
 	*--ptr = array[n % bas];
-	n /= base;
+	n /= bas;
 	} while (n != 0);
 
 	if (sign)

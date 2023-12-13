@@ -60,7 +60,7 @@ void *_realloc(void *ptr, unsigned int os, unsigned int ns)
 	if (!ptr)
 	return (malloc(ns));
 	if (!ns)
-	
+
 	return (free(ptr), NULL);
 
 	if (ns == os)
@@ -72,7 +72,7 @@ void *_realloc(void *ptr, unsigned int os, unsigned int ns)
 
 	os = os < ns ? os : ns;
 	while (os--)
-	
+
 	p[os] = ((char *)ptr)[os];
 	free(ptr);
 

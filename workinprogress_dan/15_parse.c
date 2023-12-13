@@ -78,7 +78,7 @@ char *pathfinder(info_t *info, char *pathstr, char *cmd)
 
 	if (!pathstr)
 	return (NULL);
-	if ((_strlen(cmd) > 2) && start(cmd, "./"))
+	if ((stringlength(cmd) > 2) && start(cmd, "./"))
 	{
 	if (dowehavecommand(info, cmd))
 	return (cmd);
@@ -87,13 +87,13 @@ char *pathfinder(info_t *info, char *pathstr, char *cmd)
 	{
 	if (!pathstr[x] || pathstr[x] == ':')
 	{
-	path = dup_chars(pathstr, curr_pos, x);
+	path = duplicatechars(pathstr, curr_pos, x);
 	if (!*path)
-	_strcat(path, cmd);
+	strconcat(path, cmd);
 	else
 	{
-	_strcat(path, "/");
-	_strcat(path, cmd);
+	strconcat(path, "/");
+	strconcat(path, cmd);
 	}
 	if (dowehavecmd(info, path))
 	return (path);
