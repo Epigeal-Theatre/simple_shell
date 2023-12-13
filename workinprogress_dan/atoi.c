@@ -47,14 +47,14 @@ int isalphabet(int c)
 }
 
 /**
- *atoi - this func converts str to int
+ *_atoi - this func converts str to int
  *
  *@st: the str we want to convert
  *
  *Return: 0
  */
 
-int atoi(char *st)
+int _atoi(char *st)
 {
 	int x, sign = 1, flag = 0, out;
 

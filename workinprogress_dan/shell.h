@@ -235,7 +235,7 @@ int replace_string(char **, char *);
 int interactive(info_t *);
 int isdelimiter(char c, char *);
 int isalphabet(int);
-int atoi(char *);
+int _atoi(char *);
 
 /*environment.c*/
 int envt(info_t *);
