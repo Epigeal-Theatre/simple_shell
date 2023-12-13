@@ -21,7 +21,7 @@ int main(void)
 		/* printing the prompt */
 		write(1, PROMPT, strlen(PROMPT));
 
-		/* accepting input into a string buffer */
+		/* accepting input into a string buffer *//*GETLINEGETLINE*/
 		getline(&str_buf, &read_bytes, stdin);
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
