@@ -12,7 +12,7 @@ int main(void)
 {
 	int i = 0, exe_return, wstatus, child_pid;
 	size_t read_bytes = 1024;
-/*	ssize_t read = 0;*/
+	ssize_t read = 0;
 /*	struct stat st;*/
 	char delim[] = " ";
 	char *str_buf = NULL, *token = NULL, *arg_buf[ARG_LIMIT], *exe_path = NULL;
@@ -23,7 +23,10 @@ int main(void)
 		write(1, PROMPT, strlen(PROMPT));
 
 		/* accepting input into a string buffer */
-		getline(&str_buf, &read_bytes, stdin);
+		read = getline(&str_buf, &read_bytes, stdin);
+		printf("\nreturn of getline = %li\n", read);
+		if (read == -1)
+			exit(EXIT_SUCCESS);
 
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
@@ -32,6 +35,12 @@ int main(void)
 		/* tokenizing the string so it turns into an array of arguments */
 		token = strtok(str_buf, delim);
 		printf("# the first strtok worked and accepted: %s\n\n", token);
+		if (!token)
+		{
+			free(str_buf);
+			continue;
+		}
+
 		if (strcmp(token, "exit") == 0)
 			exit(EXIT_SUCCESS);
 

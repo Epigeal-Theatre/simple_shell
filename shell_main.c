@@ -19,15 +19,20 @@ int main(void)
 	while (1)
 	{
 		write(1, PROMPT, strlen(PROMPT));
-
-		read = getline(&str_buf, &read_bytes, stdin);
+		getline(&str_buf, &read_bytes, stdin);
 		if (read == -1)
-			successandfree(str_buf, NULL);
+			exit(EXIT_SUCCESS);
 
 		if (str_buf[strlen(str_buf) - 1] == '\n')
 			str_buf[strlen(str_buf) - 1] = '\0';
 
 		token = strtok(str_buf, delim);
+		if (!token)
+		{
+			free(str_buf);
+			continue;
+		}
+
 		if (strcmp(token, "exit") == 0)
 			successandfree(str_buf, NULL);
 
