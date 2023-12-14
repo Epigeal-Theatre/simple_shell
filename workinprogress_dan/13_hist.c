@@ -15,14 +15,14 @@ char fetchfilehist(info_t *info)
 	dir = getenvt(info, "HOME=");
 	if (!dir)
 	return (NULL);
-	buf = malloc(sizeof(char) * (stringlength(dir) + stringlength(HFL) + 2));
+	buf = malloc(sizeof(char) * (stringlength(dir) + stringlength(HIST_FILE) + 2));
 	if (!buf)
 
 	return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
 	strconcat(buf, "/");
-	strconcat(buf, HFL);
+	strconcat(buf, HIST_FILE);
 
 	return (buf);
 }
