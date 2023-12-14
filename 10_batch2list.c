@@ -12,15 +12,12 @@ size_t lengthoflist(const list_t *hp)
 	size_t x = 0;
 
 	while (hp)
-
 	{
-	hp = hp->next;
-	x++;
+		hp = hp->next;
+		x++;
 	}
-
 	return (x);
 }
-
 /**
  * list2string - this func makes an array of str
  *
@@ -37,47 +34,49 @@ char **list2string(list_t *head)
 	char *str;
 
 	if (!head || !x)
-	return (NULL);
+		return (NULL);
 	strs = malloc(sizeof(char *) * (x + 1));
 	if (!strs)
-	return (NULL);
+		return (NULL);
 	for (x = 0; node; node = node->next, x++)
 	{
-	str = malloc(stringlength(node->str) + 1);
-	if (!str)
-	{
-	for (y = 0; y < x; y++)
-	free(strs[y]);
-	free(strs);
-	return (NULL);
+		str = malloc(stringlength(node->str) + 1);
+		if (!str)
+		{
+			for (y = 0; y < x; y++)
+				free(strs[y]);
+			free(strs);
+			return (NULL);
+		}
 
+		str = _strcpy(str, node->str);
+		strs[x] = str;
 	}
 	strs[x] = NULL;
 	return (strs);
 }
 
-
 /**
  * printlist -this func prins the elements of list
  *
- * @hd: placeholder for ptr to head node
+ * @h: placeholder for ptr to head node
  *
  * Return: size x
  */
 
-size_t printlist(const list_t *hd)
+size_t printlist(const list_t *h)
 {
 	size_t x = 0;
 
-	while (hd)
+	while (h)
 	{
-	_puts(convertnumber(hd->num, 10, 0));
-	_putchar(':');
-	_putchar(' ');
-	_puts(h->str ? h->str : "(nil)");
-	_puts("\n");
-	hd = hd->next;
-	x++;
+		_puts(convertnumber(h->num, 10, 0));
+		_putchar(':');
+		_putchar(' ');
+		_puts(h->str ? h->str : "(nil)");
+		_puts("\n");
+		h = h->next;
+		x++;
 	}
 	return (x);
 }
@@ -93,19 +92,17 @@ size_t printlist(const list_t *hd)
  *
  * Return: return
  */
+
 list_t *nodestart(list_t *node, char *prefix, char c)
 {
 	char *p = NULL;
 
 	while (node)
 	{
-
-	p = start(node->str, prefix);
-
-	if (p && ((c == -1) || (*p == c)))
-	return (node);
-
-	node = node->next;
+		p = start(node->str, prefix);
+		if (p && ((c == -1) || (*p == c)))
+			return (node);
+		node = node->next;
 	}
 	return (NULL);
 }
@@ -113,25 +110,23 @@ list_t *nodestart(list_t *node, char *prefix, char c)
 /**
  * getindex - this func helps fetch the indices of nodes
  *
- * @hd: placeholder for head node
+ * @head: placeholder for head node
  *
  * @node: placeholder for ptr to node
  *
  * Return: index
  */
 
-ssize_t getindex(list_t *hd, list_t *node)
+ssize_t getindex(list_t *head, list_t *node)
 {
 	size_t x = 0;
 
-	while (hd)
+	while (head)
 	{
-	if (hd == node)
-	return (x);
-
-	hd = hd->next;
-	x++;
+		if (head == node)
+			return (x);
+		head = head->next;
+		x++;
 	}
-
 	return (-1);
 }

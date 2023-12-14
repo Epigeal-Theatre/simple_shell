@@ -116,7 +116,7 @@ void findcommand(info_t *info)
 	}
 	else
 	{
-	if ((interactive(info) || getenv(info, "PATH=")
+	if ((interactive(info) || getenvt(info, "PATH=")
 	|| info->argv[0][0] == '/') && dowehavecmd(info, info->argv[0]))
 	fork_cmd(info);
 	else if (*(info->arg) != '\n')

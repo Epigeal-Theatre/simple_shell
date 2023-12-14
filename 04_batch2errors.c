@@ -43,7 +43,7 @@ int erratoi(char *s)
 
 void printerror(info_t *info, char *estr)
 {
-	_eputs(info->fname);
+	_eputs(info->fn);
 
 	_eputs(": ");
 

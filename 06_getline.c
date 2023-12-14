@@ -151,10 +151,10 @@ int _getline(info_t *info, char **ptr, size_t *length)
 
 	p = *ptr;/*we snoop into *ptr for text and store it in sz*/
 	if (p && length)
-	sz = *length;
+		sz = *length;
 
 	if (xi == len)/*after reading a line, we start again*/
-	xi = len = 0;
+		xi = len = 0;
 
 	btrd = read_buf(info, buf, &len);
 	/*we call the read func to check if read well*/
@@ -167,7 +167,10 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	new_p = _realloc(p, sz, sz ? sz + k : k + 1);
 	/*above line will reallocate space for new line*/
 
-	if (!new_p) /*if there are issues, malloc fails*/
+	if (!new_p)
+		return (p ? free(p), -1 : -1);
+	if (sz)
+		_strncat(new_p, buf + xi, k - xi);
 	else
 	_strncpy(new_p, buf + xi, k - xi + 1);
 /*if there were no issues, we add new text to old text.*/
@@ -176,7 +179,6 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	p = new_p;
 /*now we account for what has been put together and update counters*/
 	if (length)
-
 	*length = sz;
 	*ptr = p;
 /*we use counters to update new size to length of buffer*/

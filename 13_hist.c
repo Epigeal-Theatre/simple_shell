@@ -8,25 +8,22 @@
  * Return: str
  */
 
-char fetchfilehist(info_t *info)
+char *fetchfilehist(info_t *info)
 {
 	char *buf, *dir;
 
 	dir = getenvt(info, "HOME=");
 	if (!dir)
-	return (NULL);
+		return (NULL);
 	buf = malloc(sizeof(char) * (stringlength(dir) + stringlength(HIST_FILE) + 2));
 	if (!buf)
-
-	return (NULL);
+		return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
 	strconcat(buf, "/");
 	strconcat(buf, HIST_FILE);
-
 	return (buf);
 }
-
 /**
  * writehist - this func writes a fil
  *
@@ -54,7 +51,7 @@ int writehist(info_t *info)
 		_putsfdec(node->str, fdec);
 		_putfdec('\n', fdec);
 	}
-	_putfd(BUF_FLUSH, fdec);
+	_putfdec(BUF_FLUSH, fdec);
 	close(fdec);
 	return (1);
 }
