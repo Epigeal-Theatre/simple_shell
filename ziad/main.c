@@ -1,6 +1,6 @@
 #include "shell.h"
 
-#define PROMPT "$ "
+#define PROMPT "#cisfun$ "
 #define ARG_LIMIT 10
 #define ERR_NOTFOUND "Error: file or command not found\n"
 
@@ -18,8 +18,7 @@ int main(void)
 
 	while (1)
 	{
-		if (isatty(0) == 1)
-			write(1, PROMPT, _strlen(PROMPT));
+		write(1, PROMPT, _strlen(PROMPT));
 		read = getline(&str_buf, &read_bytes, stdin);
 
 		if (read == -1)
