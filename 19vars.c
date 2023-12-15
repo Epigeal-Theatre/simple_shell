@@ -121,9 +121,7 @@ int replace_alias(info_t *info)
  */
 int replace_vars(info_t *info)
 {
-	int x;
-
-	x = 0;
+	int x = 0;
 
 	list_t *node;
 

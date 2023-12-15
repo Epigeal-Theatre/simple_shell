@@ -9,9 +9,7 @@
  */
 int _erratoi(char *s)
 {
-	int x;
-
-	x = 0;
+	int x = 0;
 	unsigned long int myrst = 0;
 
 	if (*s == '+')
