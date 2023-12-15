@@ -1,52 +1,48 @@
 #include "shell.h"
-
 /**
- * main -	simple shell program
- * @ac:		argument count.
- * @av:		argument vector.
- * @env:	environment.
- * Return:	0 at success.
+ * main - this is the main entry
+ *
+ * @ac: arg ct
+ *
+ * @av: placeholder for arg vector
+ *
+ * Return: 0 oupon success or otherwise 1
  */
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
-	int exe_return, wstatus, child_pid, i;
-	size_t read_bytes = 1024;
-	ssize_t read = 0;
-	char *str_buf = NULL, **arg_buf;
-	(void) ac;
-	(void) av;
+	info_t info[] = { INFO_INIT };
 
-	while (1)
+	int xfd = 2;
+
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=q" (xfd)
+		: "q" (xfd));
+
+	if (ac == 2)
 	{
-		if (isatty(0) == 1)
-			write(1, PROMPT, _strlen(PROMPT));
-		read = getline(&str_buf, &read_bytes, stdin);
-		if (read == -1)
-			exit(EXIT_SUCCESS);
-		if (str_buf[_strlen(str_buf) - 1] == '\n')
-			str_buf[_strlen(str_buf) - 1] = '\0';
-		if (!str_buf || read == 1)
+		xfd = open(av[1], O_RDONLY);
+		if (xfd == -1)
 		{
-			free(str_buf);
-			continue;
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
+			}
+			return (EXIT_FAILURE);
 		}
-		arg_buf = tokenarray(str_buf);
-		child_pid = fork();
-		if (child_pid == -1)
-			errorandfree(str_buf, arg_buf);
-		if (child_pid == 0)
-		{
-			exe_return = execvpe(arg_buf[0], arg_buf, env);
-			if (exe_return == -1)
-				errorandfree(str_buf, arg_buf);
-		}
-		else
-		{
-			wait(&wstatus);
-			for (i = 0; arg_buf[i]; i++)
-				free(arg_buf[i]);
-			free(arg_buf);
-		}
+		info->readfd = xfd;
 	}
-	return (0);
+	populate_env_list(info);
+
+	read_history(info);
+
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
