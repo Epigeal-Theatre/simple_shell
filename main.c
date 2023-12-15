@@ -27,8 +27,7 @@ int main(int ac, char **av, char **env)
 			str_buf[_strlen(str_buf) - 1] = '\0';
 		if (!str_buf || read == 1)
 		{
-			fflush(stdin);
-			str_buf = NULL;
+			free(str_buf);
 			continue;
 		}
 		arg_buf = tokenarray(str_buf);
@@ -44,7 +43,6 @@ int main(int ac, char **av, char **env)
 		else
 		{
 			wait(&wstatus);
-			fflush(stdin);
 			for (i = 0; arg_buf[i]; i++)
 				free(arg_buf[i]);
 			free(arg_buf);
