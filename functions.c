@@ -3,8 +3,7 @@
 /**
  * tokenarray -	tokenizes a string into an array of arguments.
  * @str:	string to tokenize.
- * @arg:	argument array.
- * return:	pointer to argument array.
+ * Return:	pointer to argument array.
  */
 char **tokenarray(char *str)
 {
@@ -25,35 +24,24 @@ char **tokenarray(char *str)
 	if (arg[0] == NULL)
 		errorandfree(str, NULL);
 	_strncpy(arg[0], token, (strlen(token) + 1));
-	
+
 	for (i = 1; token != NULL && i < ARG_LIMIT; i++)
 	{
-		token = strtok (NULL, delim);
-		
-		printf("strtok success, token = %s\n", token);
+		token = strtok(NULL, delim);
 
 		if (token)
 		{
-			arg = realloc(arg, sizeof(char*) * (i + 2));
+			arg = realloc(arg, sizeof(char *) * (i + 2));
 			if (arg == NULL)
 				errorandfree(str, arg);
 			arg[i] = malloc(strlen(token) + 1);
 			if (arg[i] == NULL)
-				errorandfree(str,arg);
-		
-			printf("arg[i] malloc success, i = %i\naddress of arg[i] = %p\n", i, arg[i]);
+				errorandfree(str, arg);
 
 			_strncpy(arg[i], token, (strlen(token) + 1));
-
-			printf("strncpy success, i = %i\n", i);
 		}
 	}
-
-	printf("loop exits successfuly\n");
-
 	arg[i] = NULL;
-
-	printf("arg[i] = NULL success\narg address = %p\n", *arg);
 	return (arg);
 }
 
