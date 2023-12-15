@@ -8,13 +8,15 @@
  * main -	simple shell program
  * Return:	0 at success.
  */
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	int i = 0, exe_return, wstatus, child_pid;
 	size_t read_bytes = 1024;
 	ssize_t read = 0;
 	char delim[] = " ";
 	char *str_buf = NULL, *token = NULL, *arg_buf[ARG_LIMIT], *exe_path = NULL;
+	(void) ac;
+	(void) av;
 
 	while (1)
 	{
@@ -59,7 +61,7 @@ int main(void)
 
 		if (child_pid == 0)
 		{
-			exe_return = execvpe(exe_path, arg_buf, environ);
+			exe_return = execvpe(exe_path, arg_buf, env);
 			if (exe_return == -1)
 				errorandfree(exe_path, str_buf);
 		}
