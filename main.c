@@ -9,7 +9,7 @@
  */
 int main(int ac, char **av, char **env)
 {
-	int exe_return, wstatus, child_pid;
+	int exe_return, wstatus, child_pid, i;
 	size_t read_bytes = 1024;
 	ssize_t read = 0;
 	char *str_buf = NULL, **arg_buf;
@@ -22,7 +22,7 @@ int main(int ac, char **av, char **env)
 			write(1, PROMPT, _strlen(PROMPT));
 		read = getline(&str_buf, &read_bytes, stdin);
 		if (read == -1)
-			successandfree(str_buf, NULL);
+			exit(EXIT_SUCCESS);
 		if (str_buf[_strlen(str_buf) - 1] == '\n')
 			str_buf[_strlen(str_buf) - 1] = '\0';
 		if (!str_buf || read == 1)
@@ -45,7 +45,9 @@ int main(int ac, char **av, char **env)
 		{
 			wait(&wstatus);
 			fflush(stdin);
-			str_buf = NULL;
+			for (i = 0; arg_buf[i]; i++)
+				free(arg_buf[i]);
+			free(arg_buf);
 		}
 	}
 	return (0);

@@ -16,7 +16,7 @@ char **tokenarray(char *str)
 	if (_strcmp(token, "exit") == 0)
 		successandfree(str, NULL);
 
-	arg = malloc(sizeof(char *) * 2);
+	arg = malloc(sizeof(char *) * (ARG_LIMIT + 1));
 	if (arg == NULL)
 		errorandfree(str, NULL);
 
@@ -31,9 +31,6 @@ char **tokenarray(char *str)
 
 		if (token)
 		{
-			arg = realloc(arg, sizeof(char *) * (i + 2));
-			if (arg == NULL)
-				errorandfree(str, arg);
 			arg[i] = malloc(strlen(token) + 1);
 			if (arg[i] == NULL)
 				errorandfree(str, arg);
@@ -57,7 +54,8 @@ void errorandfree(char *buf1, char **buf2)
 
 	perror("Error: ");
 	fflush(stdin);
-	free(buf1);
+	if (buf1)
+		free(buf1);
 	if (buf2)
 	{
 		for (i = 0; buf2[i]; i++)
@@ -79,7 +77,8 @@ void successandfree(char *buf1, char **buf2)
 	int i;
 
 	fflush(stdin);
-	free(buf1);
+	if (buf1)
+		free(buf1);
 	if (buf2)
 	{
 		for (i = 0; buf2[i]; i++)
